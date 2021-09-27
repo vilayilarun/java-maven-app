@@ -2,7 +2,7 @@ def buildjar() {
     sh 'mvn package'
 }
 def imagebuild() {
-    sh 'docker build -t 192.168.179.131:8083/java-manen-app:1.1'
+    sh 'docker build -t 192.168.179.131:8083/java-manen-app:1.1 .'
 }
 def imagepush() {
     withCredentials([usernamePassword(credentialsId: 'Nexus-repo', usernameVariable: 'USER', passwordVariable: 'PWD')]){
