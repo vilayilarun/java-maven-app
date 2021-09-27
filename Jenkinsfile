@@ -1,38 +1,38 @@
-def gv
-
-pipeline {
+pipelie{
     agent any
-    stages {
-        stage("init") {
-            steps {
-                script {
-                    gv = load "script.groovy"
+    tools {
+    maven 'maven-3.8'
+    }
+    stages{
+
+        stage ("build "){
+            steps{
+                scripts{
+                    //gv.buildjar
+                    //echo 'Building the jar file'
+                     sh 'mvn package'
                 }
             }
         }
-        stage("build jar") {
-            steps {
-                script {
-                    echo "building jar"
-                    //gv.buildJar()
+        stage("Build docker image"){
+            steps{
+                scripts{
+                    //gv.imagebuild
+                   sh 'docker build -t 192.168.179.131:8083/java-manen-app:1.1'
                 }
             }
         }
-        stage("build image") {
-            steps {
-                script {
-                    echo "building image"
-                    //gv.buildImage()
+        stage("push the image to nexus repository"){
+            steps{
+                scripts{
+                    withCredentials([
+                    usernamePassword(credentialId: 'Nexus-repo', usernameVariable: 'USER', passwordVariable: 'PWD')
+                    ]){
+                    sh 'echo $PWD | docker login -u $USER --pasword-stdin 192.168.179.131:8083'
+                    sh 'docker push 192.168.179.131:8083/java-manen-app:1.1'
+                    }
                 }
             }
         }
-        stage("deploy") {
-            steps {
-                script {
-                    echo "deploying"
-                    //gv.deployApp()
-                }
-            }
-        }
-    }   
+    }
 }
