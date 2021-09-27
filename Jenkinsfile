@@ -1,10 +1,10 @@
 pipeline{
     agent any
     tools{
-    maven 'maven-3.8'
+    maven 'maven'
     }
     stages{
-        stage ("build jar file"){
+        stage("build jar file"){
             steps{
                 scripts{
                     //gv.buildjar
