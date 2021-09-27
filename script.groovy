@@ -1,19 +1,13 @@
-def buildJar() {
-    echo "building the application..."
+def buildjar() {
     sh 'mvn package'
-} 
-
-def buildImage() {
-    echo "building the docker image..."
-    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh 'docker build -t nanajanashia/demo-app:jma-2.0 .'
-        sh "echo $PASS | docker login -u $USER --password-stdin"
-        sh 'docker push nanajanashia/demo-app:jma-2.0'
+}
+def imagebuild() {
+    sh 'docker build -t 192.168.179.131:8083/java-manen-app:1.1'
+}
+drf imagepush() {
+    withCredentials([usernamePassword(credentialsId: 'Nexus-repo', usernameVariable: 'USER', passwordVariable: 'PWD')]){
+    sh "echo $PWD | docker login -u $USER --pasword-stdin 192.168.179.131:8083"
+    sh 'docker push 192.168.179.131:8083/java-manen-app:1.1'
     }
-} 
-
-def deployApp() {
-    echo 'deploying the application...'
-} 
-
-return this
+}
+return this 
