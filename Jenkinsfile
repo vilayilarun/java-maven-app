@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage("build jar file"){
             steps{
-                scripts{
+                script{
                     //gv.buildjar
                     //echo 'Building the jar file'
                      sh 'mvn package'
@@ -15,7 +15,7 @@ pipeline{
         }
         stage("Build docker image"){
             steps{
-                scripts{
+                script{
                     //gv.imagebuild
                    sh 'docker build -t 192.168.179.131:8083/java-manen-app:1.1'
                 }
@@ -23,7 +23,7 @@ pipeline{
         }
         stage("push the image to nexus repository"){
             steps{
-                scripts{
+                script{
                     withCredentials([
                     usernamePassword(credentialId: 'Nexus-repo', usernameVariable: 'USER', passwordVariable: 'PWD')
                     ]){
