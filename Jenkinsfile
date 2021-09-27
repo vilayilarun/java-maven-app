@@ -17,7 +17,7 @@ pipeline{
             steps{
                 script{
                     //gv.imagebuild
-                   sh 'docker build -t 192.168.179.131:8083/java-manen-app:1.1'
+                   sh 'docker build -t 192.168.179.131:8083/java-manen-app:1.1 .'
                 }
             }
         }
