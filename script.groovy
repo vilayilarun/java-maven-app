@@ -10,7 +10,7 @@ def buildjar() {
     sh 'mvn package'
 }
 def imagebuild() {
-    sh "docker build -t 35.200.245.75:8083/${env.IMG}."
+    sh "docker build -t 35.200.245.75:8083/${env.IMG} ."
 }
 def imagepush() {
     withCredentials([usernamePassword(credentialsId: 'Nexus-repo', usernameVariable: 'USER', passwordVariable: 'PWD')]){
