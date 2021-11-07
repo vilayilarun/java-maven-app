@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 def version() {
     echo 'incrementing app.vserion'
-    sh 'mvn build-helper:parse-version vserions:set -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit' # update the version in pom.xml file 
+    sh 'mvn build-helper:parse-version vserions:set -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit' 
     def matcher=readFile('pom.xml') =~ '<version>(.+)</version>'
     def version=matcher[0][1]
     env.IMG="$version-$BUILD_NUMBER"
