@@ -12,6 +12,13 @@ pipeline{
               }
            }
         }
+        stage("Version update") {
+            steps{
+                script{
+                    gv.version()    
+                }
+            }
+        }
         stage("build jar file"){
             steps{
                 script{
@@ -30,6 +37,20 @@ pipeline{
             steps{
                 script{
                    gv.imagepush()
+                }
+            }
+        }
+        stage("deploy image") {
+            steps{
+                script{
+                   gv.deploy()
+                }
+            }
+        }
+        stage("Pushing the tag back to repository"){
+            steps{
+                script{
+                    gv.push()
                 }
             }
         }
