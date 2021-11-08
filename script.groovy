@@ -10,21 +10,21 @@ def buildjar() {
     sh 'mvn package'
 }
 def imagebuild() {
-    sh "docker build -t 35.200.245.75:8083/${env.IMG} ."
+    sh "docker build -t 35.200.245.75:8083/java-maven:${env.IMG} ."
 }
 def imagepush() {
     withCredentials([usernamePassword(credentialsId: 'Nexus-repo', usernameVariable: 'USER', passwordVariable: 'PWD')]){
     sh "echo $PWD | docker login -u $USER --password-stdin 35.200.245.75:8083"
-    sh "docker push 35.200.245.75:8083/${env.IMG}"
+    sh "docker push 35.200.245.75:8083/java-maven:${env.IMG}"
     }
 }
 def deploy() {
     echo 'deploying docker image to EC2...'
 
     def shellCmd = "bash ./server-cmds.sh ${IMG}"
-    def ec2Instance = "ec2-user@35.180.251.121"
+    def ec2Instance = "ec2-user@3.108.220.227"
 
-    sshagent(['ec2-server-key']) {
+    sshagent(['ec2-aws']) {
         sh "scp server-cmds.sh ${ec2Instance}:/home/ec2-user"
         sh "scp docker-compose.yaml ${ec2Instance}:/home/ec2-user"
         sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"

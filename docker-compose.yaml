@@ -1,6 +1,6 @@
 version: '3.8'
 services:
   my-app:
-    image: ${IMG}
+    image: 35.200.245.75:8083/java-maven:${IMG}
     ports:
       - 8080:8080
