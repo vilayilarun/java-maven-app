@@ -39,7 +39,7 @@ def push() {
         sh "git remote set-url origin https://${USER}:${PWD}@github.com/vilayilarun/java-maven-app.git"
         sh 'git add .'
         sh 'git commit -m "commit from jenkins"'
-        sh 'git push origin HEAD:java-maven-app'
+        sh 'git push origin HEAD:master'
     }
 }
 return this 
