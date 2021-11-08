@@ -36,7 +36,7 @@ def push() {
         echo "pushing the updated image tag to github"
         sh 'git config user.name "Jenkins"'
         sh 'git config user.email "jenkins@example.com"'
-        sh "git remote set-url origin https://${USER}:${PWD}@https://github.com/vilayilarun"
+        sh "git remote set-url origin https://${USER}:${PWD}@github.com/vilayilarun"
         sh 'git commit -a -m "commit from jenkins"'
         sh 'git push origin HEAD:java-maven-app'
     }
