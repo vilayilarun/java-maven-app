@@ -7,7 +7,7 @@ def version() {
     env.IMG="$version-$BUILD_NUMBER"
 }
 def buildjar() {
-    sh 'mvn package'
+    sh 'mvn clean package'
 }
 def imagebuild() {
     sh "docker build -t 35.200.245.75:8083/java-maven:${env.IMG} ."
