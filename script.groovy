@@ -38,7 +38,7 @@ def push() {
         sh 'git config user.email "jenkins@example.com"'
         sh "git remote set-url origin https://${USER}:${PWD}@github.com/vilayilarun/java-maven-app.git"
         sh 'git add .'
-        sh 'git commit -m "commit from jenkins"'
+        sh 'git commit -m "Jenkins commit CI/CD"'
         sh 'git push origin HEAD:master'
     }
 }
