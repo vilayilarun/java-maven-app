@@ -22,7 +22,7 @@ def deploy() {
     echo 'deploying docker image to EC2...'
 
     def shellCmd = "bash ./server-cmds.sh ${IMG}"
-    def ec2Instance = "ec2-user@65.2.150.151"
+    def ec2Instance = "ec2-user@52.66.241.195"
 
     sshagent(['ec2-aws']) {
         sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user"
