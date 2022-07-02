@@ -48,7 +48,7 @@ pipeline{
             steps{
                 script{
                     dir('terraform'){
-                        gv.provisioning
+                        gv.provisioning()
                     }
                 }
             }
