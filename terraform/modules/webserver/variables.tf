@@ -6,3 +6,4 @@ variable avail-zone {}
 variable instance_type {}
 variable subnet_id {}
 variable private-key-location {}
+variable jenkins_ip {}

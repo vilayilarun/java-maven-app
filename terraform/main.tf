@@ -28,5 +28,6 @@ module "webserver" {
   instance_type = var.instance_type
   subnet_id = module.myapp-subnet.subnet.id
   private-key-location = var.private-key-location
+  jenkins_ip = var.jenkins
   
 }

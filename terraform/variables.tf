@@ -20,5 +20,8 @@ variable region {
     default = "ap-south-1"
   
 }
+variable jenkins {
+    default = "10.20.200.1/32"
+}
 /*variable pub-key-location {}
 variable private-key-location {}*/
