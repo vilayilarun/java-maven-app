@@ -18,11 +18,24 @@ def imagepush() {
     sh "docker push 35.200.245.75:8083/java-maven:${env.IMG}"
     }
 }
+/* terrafrom codes for provisioning infrastracture*/
+def provisioning() {
+        sh "terraform init"
+        sh "terrrafrom apply --auto-approve"
+        EC2_PUBLIC_IP = sh(
+          script: "terraform output ec2-public-ip"
+          returnStdout: true
+        ).trim()
+    }
+}
 def deploy() {
+    echo "waiting for the instance is come up"
+    sleep(time: 120, unit: "SECONDS")
     echo 'deploying docker image to EC2...'
+    echo ${EC2_PUBLIC_IP}
 
     def shellCmd = "bash ./server-cmds.sh ${IMG}"
-    def ec2Instance = "ec2-user@52.66.241.195"
+    def ec2Instance = "ec2-user@${EC2_PUBLIC_IP}"
 
     sshagent(['ec2-aws']) {
         sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user"
