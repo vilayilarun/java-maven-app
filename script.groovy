@@ -29,12 +29,13 @@ def provisioning() {
     }
 }
 def deploy() {
+    withCredentials([usernamePassword(credentialsId: 'nexus-repo', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PWD')]){
     echo "waiting for the instance is come up"
     sleep(time: 120, unit: "SECONDS")
     echo 'deploying docker image to EC2...'
     echo ${EC2_PUBLIC_IP}
 
-    def shellCmd = "bash ./server-cmds.sh ${IMG}"
+    def shellCmd = "bash ./server-cmds.sh ${IMG} ${DOCKER_PWD} ${DOCKER_USER}"
     def ec2Instance = "ec2-user@${EC2_PUBLIC_IP}"
 
     sshagent(['ec2-aws']) {
@@ -42,6 +43,7 @@ def deploy() {
         sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/ec2-user"
         sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
 
+    }
     }
 }
 def push() {
