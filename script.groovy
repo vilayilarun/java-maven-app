@@ -23,7 +23,7 @@ def provisioning() {
         sh "terraform init"
         sh "terrrafrom apply --auto-approve"
         EC2_PUBLIC_IP = sh(
-          script: "terraform output ec2-public-ip"
+          script: "terraform output ec2-public-ip",
           returnStdout: true
         ).trim()
     }
