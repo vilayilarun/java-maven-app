@@ -21,7 +21,7 @@ def imagepush() {
 /* terrafrom codes for provisioning infrastracture*/
 def provisioning() {
         sh "terraform init"
-        sh "terrafrom apply --auto-approve"
+        sh "terraform apply --auto-approve"
         EC2_PUBLIC_IP = sh(
           script: "terraform output ec2-public-ip",
           returnStdout: true
