@@ -23,11 +23,13 @@ module "webserver" {
   myapp-vpc_id = aws_vpc.myapp-vpc.id
   myip = var.myip
   environment = var.environment
-  pub-key-location = var.pub-key-location
+  # required if a key pair is creating
+  #pub-key-location = var.pub-key-location
   avail-zone = var.avail-zone
   instance_type = var.instance_type
   subnet_id = module.myapp-subnet.subnet.id
-  private-key-location = var.private-key-location
+  # required only during provisioner is there 
+  #private-key-location = var.private-key-location
   jenkins_ip = var.jenkins
   
 }
