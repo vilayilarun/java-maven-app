@@ -8,7 +8,7 @@ variable environment {
     default = "dev"
 }
 variable avail-zone {
-    dddefault = "ap-south-1a"
+    default = "ap-south-1a"
 }
 variable myip {
     default = "172.16.20.20/32s"
