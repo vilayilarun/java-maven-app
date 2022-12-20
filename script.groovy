@@ -10,25 +10,39 @@ def buildjar() {
     sh 'mvn clean package'
 }
 def imagebuild() {
-    sh "docker build -t 35.200.245.75:8083/java-maven:${env.IMG} ."
+    sh "docker build -t vilayilarun/max:java-maven-${env.IMG} ."
 }
 def imagepush() {
-    withCredentials([usernamePassword(credentialsId: 'Nexus-repo', usernameVariable: 'USER', passwordVariable: 'PWD')]){
-    sh "echo $PWD | docker login -u $USER --password-stdin 35.200.245.75:8083"
-    sh "docker push 35.200.245.75:8083/java-maven:${env.IMG}"
+    withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'USER', passwordVariable: 'PWD')]){
+    sh "echo $PWD | docker login -u $USER --password-stdin "
+    sh "docker push vilayilarun/max:java-maven-${env.IMG}"
     }
 }
+/* terrafrom codes for provisioning infrastracture*/
+def provisioning() {
+        sh "terraform init"
+        sh "terrrafrom apply --auto-approve"
+        EC2_PUBLIC_IP = sh(
+          script: "terraform output ec2-public-ip",
+          returnStdout: true
+        ).trim()
+    }
 def deploy() {
+    withCredentials([usernamePassword(credentialsId: 'nexus-repo', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PWD')]){
+    echo "waiting for the instance is come up"
+    sleep(time: 120, unit: "SECONDS")
     echo 'deploying docker image to EC2...'
+    echo ${EC2_PUBLIC_IP}
 
-    def shellCmd = "bash ./server-cmds.sh ${IMG}"
-    def ec2Instance = "ec2-user@52.66.241.195"
+    def shellCmd = "bash ./server-cmds.sh ${IMG} ${DOCKER_PWD} ${DOCKER_USER}"
+    def ec2Instance = "ec2-user@${EC2_PUBLIC_IP}"
 
     sshagent(['ec2-aws']) {
         sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user"
         sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/ec2-user"
         sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
 
+    }
     }
 }
 def push() {
