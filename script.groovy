@@ -25,7 +25,7 @@ def provisioning() {
         EC2_PUBLIC_IP = sh(
           script: "terraform output ec2-public-ip",
           returnStdout: true
-        )trim()
+        ).trim()
     }
 }
 def deploy() {
