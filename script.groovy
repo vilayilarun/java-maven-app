@@ -28,7 +28,7 @@ def provisioning() {
         ).trim()
     }
 def deploy() {
-    withCredentials([usernamePassword(credentialsId: 'nexus-repo', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PWD')]){
+    withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PWD')]){
     echo "waiting for the instance is come up"
     sleep(time: 120, unit: "SECONDS")
     echo 'deploying docker image to EC2...'
