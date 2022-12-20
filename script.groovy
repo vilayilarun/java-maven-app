@@ -10,12 +10,12 @@ def buildjar() {
     sh 'mvn clean package'
 }
 def imagebuild() {
-    sh "docker build -t vilayilarun/max:java-maven:${env.IMG} ."
+    sh "docker build -t vilayilarun/max:java-maven-${env.IMG} ."
 }
 def imagepush() {
     withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'USER', passwordVariable: 'PWD')]){
     sh "echo $PWD | docker login -u $USER --password-stdin "
-    sh "docker push vilayilarun/max:java-maven:${env.IMG}"
+    sh "docker push vilayilarun/max:java-maven-${env.IMG}"
     }
 }
 /* terrafrom codes for provisioning infrastracture*/
