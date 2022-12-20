@@ -32,7 +32,7 @@ resource "aws_security_group" "myapp-sg" {
 data "aws_ami" "Linux-image" {
   most_recent = true
   owners = ["amazon"]
-  filter = {
+  filter {
     name = "name"
     values = ["amzn2-ami-hvm-*-x86_64-gp2"]
   }
