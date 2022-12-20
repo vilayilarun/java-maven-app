@@ -5,7 +5,7 @@ provider "aws" {
 resource "aws_vpc" "myapp-vpc" {
   cidr_block = var.vpc-cidr-block
   tags = {
-    "Name" = "${environment}-vpc "
+    "Name" = "${var.environment}-vpc "
   }
   
 }
