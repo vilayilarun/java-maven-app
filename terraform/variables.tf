@@ -11,7 +11,7 @@ variable avail-zone {
     default = "ap-south-1a"
 }
 variable myip {
-    default = "172.16.20.20/32"
+    default = "172.16.20.96/32"
 }
 variable instance_type {
     default = "t2.medium"
