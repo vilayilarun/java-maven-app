@@ -1,5 +1,5 @@
 resource "aws_subnet" "myapp-subnet-1" {
-  vpc_id = var.myapp-vpc.id
+  vpc_id = var.myapp-vpc
   cidr_block = var.subnet-cidr-block
   availability_zone = var.avail-zone
   tags = {
