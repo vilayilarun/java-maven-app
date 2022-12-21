@@ -8,7 +8,7 @@ resource "aws_subnet" "myapp-subnet-1" {
 }
 
 resource "aws_route_table" "myapp-rtb" {
-  vpc_id = var.myapp-vpc.id
+  vpc_id = var.myapp-vpc
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.myapp-igw.id
@@ -20,7 +20,7 @@ resource "aws_route_table" "myapp-rtb" {
 }
 
 resource "aws_internet_gateway" "myapp-igw" {
-  vpc_id = var.myapp-vpc.id
+  vpc_id = var.myapp-vpc
   tags_all = {
     "Name" = "${var.environment}-igw"
   }
